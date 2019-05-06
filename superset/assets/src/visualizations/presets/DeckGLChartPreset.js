@@ -26,6 +26,7 @@ import PathChartPlugin from '../deckgl/layers/Path/PathChartPlugin';
 import PolygonChartPlugin from '../deckgl/layers/Polygon/PolygonChartPlugin';
 import ScatterChartPlugin from '../deckgl/layers/Scatter/ScatterChartPlugin';
 import ScreengridChartPlugin from '../deckgl/layers/Screengrid/ScreengridChartPlugin';
+import IconLayerChartPlugin from '../deckgl/layers/Icon/IconLayerChartPlugin';
 
 export default class DeckGLChartPreset extends Preset {
   constructor() {
@@ -41,6 +42,7 @@ export default class DeckGLChartPreset extends Preset {
         new PolygonChartPlugin().configure({ key: 'deck_polygon' }),
         new ScatterChartPlugin().configure({ key: 'deck_scatter' }),
         new ScreengridChartPlugin().configure({ key: 'deck_screengrid' }),
+        new IconLayerChartPlugin().configure({ key: 'deck_icon' }),
       ],
     });
   }

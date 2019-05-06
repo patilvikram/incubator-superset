@@ -516,8 +516,11 @@ class TableViz(BaseViz):
         return fd.get('include_time')
 
     def query_obj(self):
+
         d = super().query_obj()
         fd = self.form_data
+        print(d)
+        print(fd)
 
         if fd.get('all_columns') and (fd.get('groupby') or fd.get('metrics')):
             raise Exception(_(
@@ -548,6 +551,8 @@ class TableViz(BaseViz):
 
     def get_data(self, df):
         fd = self.form_data
+        print(df)
+
         if (
                 not self.should_be_timeseries() and
                 df is not None and
@@ -2756,6 +2761,91 @@ class PartitionViz(NVD3TimeSeriesViz):
             levels = self.levels_for('agg_sum', [DTTM_ALIAS] + groups, df)
         return self.nest_values(levels)
 
+
+
+
+class DeckIcon(BaseDeckGLViz):
+
+    """deck.gl's Icon Layer"""
+
+    viz_type = 'deck_icon'
+    verbose_name = _('Deck.gl - Icon')
+    spatial_control_keys = ['spatial']
+    is_timeseries = True
+
+    # Updating Query object
+    def query_obj(self):
+        fd = self.form_data
+        d = super().query_obj()
+        print(d)
+        self.is_timeseries = bool(
+            fd.get('time_grain_sqla') or fd.get('granularity'))
+        if len(fd.get('all_columns')) != 0 and 'columns' in d:
+            d['columns'].extend(fd.get('all_columns'))
+
+        return d
+
+    def get_properties(self, d):
+
+        dim = self.form_data.get('dimension')
+        print("Fetching properties",d)
+        return {
+            'coordinates': d['spatial'],
+            # 'cat_color': d.get(dim) if dim else None,
+            DTTM_ALIAS: d.get(DTTM_ALIAS),
+        }
+
+    # def get_data(self, df):
+    #
+    #     d = super().get_data(df)
+    #     print(d['features'])
+    #     return {
+    #         'features': d['features'],
+    #         'mapboxApiKey': config.get('MAPBOX_API_KEY'),
+    #     }
+
+    def get_data(self, df):
+        d = super().get_data(df)
+        print(df.to_dict(orient='records'))
+        #
+        # print(d)
+
+        return {
+            'features': df.to_dict(orient='records'),
+            'mapboxApiKey': config.get('MAPBOX_API_KEY'),
+        }
+
+# class DeckArc(BaseDeckGLViz):
+#
+#     """deck.gl's Arc Layer"""
+#
+#     viz_type = 'deck_arc'
+#     verbose_name = _('Deck.gl - Arc')
+#     spatial_control_keys = ['start_spatial', 'end_spatial']
+#     is_timeseries = True
+#
+#     def query_obj(self):
+#         fd = self.form_data
+#         self.is_timeseries = bool(
+#             fd.get('time_grain_sqla') or fd.get('granularity'))
+#         return super().query_obj()
+#
+#     def get_properties(self, d):
+#         dim = self.form_data.get('dimension')
+#         return {
+#             'sourcePosition': d.get('start_spatial'),
+#             'targetPosition': d.get('end_spatial'),
+#             'cat_color': d.get(dim) if dim else None,
+#             DTTM_ALIAS: d.get(DTTM_ALIAS),
+#         }
+#
+#     def get_data(self, df):
+#         d = super().get_data(df)
+#
+#         return {
+#             'features': d['features'],
+#             'mapboxApiKey': config.get('MAPBOX_API_KEY'),
+#         }
 
 viz_types = {
     o.viz_type: o for o in globals().values()

@@ -9,7 +9,7 @@
  *
  *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing,`
+ * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
@@ -17,52 +17,61 @@
  * under the License.
  */
 import { t } from '@superset-ui/translation';
+import timeGrainSqlaAnimationOverrides from './timeGrainSqlaAnimationOverrides';
 
 export default {
+  requiresTime: true,
   controlPanelSections: [
-    {
-      label: t('GROUP BY'),
-      description: t('Use this section if you want a query that aggregates'),
-      expanded: true,
-      controlSetRows: [
-        ['groupby'],
-        ['metrics'],
-        ['percent_metrics'],
-        ['timeseries_limit_metric', 'row_limit'],
-        ['include_time', 'order_desc'],
-      ],
-    },
-    {
-      label: t('NOT GROUPED BY'),
-      description: t('Use this section if you want to query atomic rows'),
-      expanded: true,
-      controlSetRows: [
-        ['all_columns'],
-        ['order_by_cols'],
-        ['row_limit', null],
-      ],
-    },
     {
       label: t('Query'),
       expanded: true,
       controlSetRows: [
         ['adhoc_filters'],
+        ['row_limit', null],
+        ['spatial'],
+        ['all_columns'],
+//        ['reverse_long_lat', 'filter_nulls'],
       ],
     },
     {
-      label: t('Options'),
+      label: t('Map'),
       expanded: true,
       controlSetRows: [
-        ['table_timestamp_format'],
-        ['page_length', null],
-        ['include_search', 'table_filter'],
-        ['align_pn', 'color_pn'],
+        ['mapbox_style', 'viewport'],
+        ['autozoom', null],
       ],
     },
+    {
+      label: t('Icon'),
+      controlSetRows: [
+        ['color_picker' ],
+//        ['dimension', 'color_scheme', 'label_colors'],
+//        ['stroke_width', 'legend_position'],
+      ],
+    },
+//    {
+//      label: t('Icon'),
+//      controlSetRows: [
+//        ['color_picker', 'target_color_picker'],
+//        ['dimension', 'color_scheme', 'label_colors'],
+//        ['stroke_width', 'legend_position'],
+//      ],
+//    },
+
   ],
   controlOverrides: {
-    metrics: {
+    metric: {
       validators: [],
     },
+//    line_column: {
+//      label: t('Polygon Column'),
+//    },
+//    line_type: {
+//      label: t('Polygon Encoding'),
+//    },
+//    point_radius_fixed: {
+//      label: t('Elevation'),
+//    },
+    time_grain_sqla: timeGrainSqlaAnimationOverrides,
   },
 };

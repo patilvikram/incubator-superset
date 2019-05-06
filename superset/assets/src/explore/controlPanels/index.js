@@ -72,6 +72,7 @@ import DeckPath from './DeckPath';
 import DeckPolygon from './DeckPolygon';
 import DeckScatter from './DeckScatter';
 import DeckScreengrid from './DeckScreengrid';
+import DeckIcon from './DeckIcon';
 
 export const controlPanelConfigs = extraOverrides({
   area: Area,
@@ -122,6 +123,7 @@ export const controlPanelConfigs = extraOverrides({
   deck_polygon: DeckPolygon,
   deck_scatter: DeckScatter,
   deck_screengrid: DeckScreengrid,
+  deck_icon: DeckIcon,
 });
 
 export default controlPanelConfigs;

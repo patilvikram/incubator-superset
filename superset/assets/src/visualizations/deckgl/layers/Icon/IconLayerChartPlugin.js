@@ -16,27 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/* eslint camelcase: 0 */
-import { getLayer as deck_grid } from './Grid/Grid';
-import { getLayer as deck_screengrid } from './Screengrid/Screengrid';
-import { getLayer as deck_path } from './Path/Path';
-import { getLayer as deck_hex } from './Hex/Hex';
-import { getLayer as deck_scatter } from './Scatter/Scatter';
-import { getLayer as deck_geojson } from './Geojson/Geojson';
-import { getLayer as deck_arc } from './Arc/Arc';
-import { getLayer as deck_polygon } from './Polygon/Polygon';
-import { getLayer as dec_icon } from './Icon/Icon';
+import { t } from '@superset-ui/translation';
+import { ChartMetadata, ChartPlugin } from '@superset-ui/chart';
+import thumbnail from './images/thumbnail.png';
+import transformProps from '../../transformProps';
 
-const layerGenerators = {
-  deck_grid,
-  deck_screengrid,
-  deck_path,
-  deck_hex, 
-  deck_scatter,
-  deck_geojson,
-  deck_arc,
-  deck_polygon,
-  dec_icon
-};
+const metadata = new ChartMetadata({
+  name: t('deck.gl Icon'),
+  description: '',
+  credits: ['https://uber.github.io/deck.gl'],
+  thumbnail,
+});
 
-export default layerGenerators;
+export default class IconLayerChartPlugin extends ChartPlugin {
+  constructor() {
+    super({
+      metadata,
+      loadChart: () => import('./Icon.jsx'),
+      transformProps,
+    });
+  }
+}

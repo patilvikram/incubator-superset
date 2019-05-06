@@ -46,7 +46,7 @@ const IMAGE_PER_ROW = 6;
 const LABEL_STYLE = { cursor: 'pointer' };
 const DEFAULT_ORDER = [
   'line', 'big_number', 'table', 'filter_box', 'dist_bar', 'area', 'bar',
-  'deck_polygon', 'pie', 'time_table', 'pivot_table', 'histogram',
+  'deck_polygon','deck_icon', 'pie', 'time_table', 'pivot_table', 'histogram',
   'big_number_total', 'deck_scatter', 'deck_hex', 'time_pivot', 'deck_arc',
   'heatmap', 'deck_grid', 'dual_line', 'deck_screengrid', 'line_multi',
   'treemap', 'box_plot', 'separator', 'sunburst', 'sankey', 'word_cloud',
