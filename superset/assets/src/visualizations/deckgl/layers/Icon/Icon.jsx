@@ -32,24 +32,6 @@ function getPoints(data) {
   return points;
 }
 
-/**
-function setTooltipContent(formData) {
-  return o => (
-    <div className="deckgl-tooltip">
-      <TooltipRow label={`${t('Start (Longitude, Latitude)')}: `} value={`${o.object.sourcePosition[0]}, ${o.object.sourcePosition[1]}`} />
-      <TooltipRow label={`${t('End (Longitude, Latitude)')}: `} value={`${o.object.targetPosition[0]}, ${o.object.targetPosition[1]}`} />
-      {
-        formData.dimension && <TooltipRow label={`${formData.dimension}: `} value={`${o.object.cat_color}`} />
-      }
-    </div>
-  );
-}
-*/
-//getColor: d =>  d.color || [sc.r, sc.g, sc.b, 255 * sc.a],
- //  getIcon: d => 'https://previews.123rf.com/images/giamportone/giamportone1711/giamportone171100565/90514896-map-pin-location-orange-icon-gps-place-marker.jpg',
-
-
-
 const ICON_MAPPING = {
  airplane : {
 
@@ -72,17 +54,7 @@ function setTooltip(object, x, y) {
   }
 }
 
-function setTooltip2(object, x, y) {
-  console.log("On Hover called");
-  return o => (
-  <div className="deckgl-tooltip">
-      <TooltipRow label={`${t('Location ')}: `} value={`${o.NUMBER}`} />
 
-    </div>
-
-
-   );
-}
 
 /**
 function setTooltipContent(object, x, y) {
@@ -97,8 +69,17 @@ function setTooltipContent(object, x, y) {
   );
 }
 */
-export function getLayer(fd, payload, onAddFilter, setTooltip) {
 
+function setTooltipContent(o) {
+
+  return  (
+    <div className="deckgl-tooltip">
+    <TooltipRow label={`${t('Testing')}`} value = {`${o.object.NUMBER}`} />
+    </div>
+  );
+}
+export function getLayer(fd, payload, onAddFilter, setTooltip) {
+    console.log(fd);
   console.log("payload:",payload);
   const data = payload.data.features;
   console.log("data:",data);
@@ -115,7 +96,7 @@ export function getLayer(fd, payload, onAddFilter, setTooltip) {
      getSize: d => 1,
      getIcon: d => 'airplane',
      pickable: true,
-     onHover: info => { console.log(info.object); setTooltip(info.object, info.x, info.y);}
+     ...commonLayerProps(fd, setTooltip, setTooltipContent),
   });
 }
 
